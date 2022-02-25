@@ -1,0 +1,14 @@
+# Git
+*.orig
+
+# Maven
+target/
+.surefire-*
+.flattened-pom.xml
+
+# Node
+node_modules/
+test-results/
+
+# Do not check in any log files
+*.log
