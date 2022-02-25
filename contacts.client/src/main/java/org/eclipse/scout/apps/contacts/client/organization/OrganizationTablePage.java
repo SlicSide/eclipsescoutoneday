@@ -1,8 +1,8 @@
-package org.eclipse.scout.apps.contacts.client.contact;
+package org.eclipse.scout.apps.contacts.client.organization;
 
 import org.eclipse.scout.apps.contacts.client.common.CountryLookupCall;
-import org.eclipse.scout.apps.contacts.client.contact.OrganizationTablePage.Table;
-import org.eclipse.scout.apps.contacts.shared.contact.IOrganizationService;
+import org.eclipse.scout.apps.contacts.client.organization.OrganizationTablePage.Table;
+import org.eclipse.scout.apps.contacts.shared.organization.IOrganizationService;
 import org.eclipse.scout.apps.contacts.shared.contact.OrganizationTablePageData;
 import org.eclipse.scout.rt.client.dto.Data;
 import org.eclipse.scout.rt.client.ui.basic.table.AbstractTable;

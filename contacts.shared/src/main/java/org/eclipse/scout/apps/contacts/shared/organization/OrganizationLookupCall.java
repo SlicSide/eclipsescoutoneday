@@ -1,4 +1,4 @@
-package org.eclipse.scout.apps.contacts.shared.contact;
+package org.eclipse.scout.apps.contacts.shared.organization;
 
 import org.eclipse.scout.rt.platform.classid.ClassId;
 import org.eclipse.scout.rt.shared.services.lookup.ILookupService;

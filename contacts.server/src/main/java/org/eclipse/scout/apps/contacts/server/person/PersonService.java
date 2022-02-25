@@ -1,7 +1,7 @@
-package org.eclipse.scout.apps.contacts.server.contact;
+package org.eclipse.scout.apps.contacts.server.person;
 
 import org.eclipse.scout.apps.contacts.server.sql.SQLs;
-import org.eclipse.scout.apps.contacts.shared.contact.IPersonService;
+import org.eclipse.scout.apps.contacts.shared.person.IPersonService;
 import org.eclipse.scout.apps.contacts.shared.contact.PersonTablePageData;
 import org.eclipse.scout.rt.platform.holders.NVPair;
 import org.eclipse.scout.rt.server.jdbc.SQL;

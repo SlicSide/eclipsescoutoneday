@@ -1,5 +1,7 @@
 package org.eclipse.scout.apps.contacts.client.contact;
 
+import org.eclipse.scout.apps.contacts.client.organization.OrganizationTablePage;
+import org.eclipse.scout.apps.contacts.client.person.PersonTablePage;
 import org.eclipse.scout.apps.contacts.shared.Icons;
 import org.eclipse.scout.rt.client.ui.desktop.outline.AbstractOutline;
 import org.eclipse.scout.rt.client.ui.desktop.outline.pages.IPage;
