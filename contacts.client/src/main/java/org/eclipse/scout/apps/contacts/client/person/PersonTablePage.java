@@ -2,20 +2,29 @@ package org.eclipse.scout.apps.contacts.client.person;
 
 import org.eclipse.scout.apps.contacts.client.common.CountryLookupCall;
 import org.eclipse.scout.apps.contacts.client.person.PersonTablePage.Table;
-import org.eclipse.scout.apps.contacts.shared.person.IPersonService;
-import org.eclipse.scout.apps.contacts.shared.organization.OrganizationLookupCall;
 import org.eclipse.scout.apps.contacts.shared.contact.PersonTablePageData;
+import org.eclipse.scout.apps.contacts.shared.organization.OrganizationLookupCall;
+import org.eclipse.scout.apps.contacts.shared.person.IPersonService;
 import org.eclipse.scout.rt.client.dto.Data;
+import org.eclipse.scout.rt.client.ui.action.menu.AbstractMenu;
+import org.eclipse.scout.rt.client.ui.action.menu.IMenu;
+import org.eclipse.scout.rt.client.ui.action.menu.IMenuType;
+import org.eclipse.scout.rt.client.ui.action.menu.TableMenuType;
 import org.eclipse.scout.rt.client.ui.basic.table.AbstractTable;
 import org.eclipse.scout.rt.client.ui.basic.table.columns.AbstractSmartColumn;
 import org.eclipse.scout.rt.client.ui.basic.table.columns.AbstractStringColumn;
 import org.eclipse.scout.rt.client.ui.desktop.outline.pages.AbstractPageWithTable;
+import org.eclipse.scout.rt.client.ui.form.FormEvent;
+import org.eclipse.scout.rt.client.ui.form.FormListener;
 import org.eclipse.scout.rt.platform.BEANS;
 import org.eclipse.scout.rt.platform.Order;
 import org.eclipse.scout.rt.platform.classid.ClassId;
 import org.eclipse.scout.rt.platform.text.TEXTS;
+import org.eclipse.scout.rt.platform.util.CollectionUtility;
 import org.eclipse.scout.rt.shared.services.common.jdbc.SearchFilter;
 import org.eclipse.scout.rt.shared.services.lookup.ILookupCall;
+
+import java.util.Set;
 
 @Data(PersonTablePageData.class)
 @ClassId("8f3f678a-c455-4621-b97b-bec45abf81c1")
@@ -32,12 +41,72 @@ public class PersonTablePage extends AbstractPageWithTable<Table> {
 
   @Override
   protected String getConfiguredTitle() {
-// TODO [RicoHahn] verify translation
     return TEXTS.get("Persons");
   }
 
   @ClassId("194fe33e-3e7d-455e-b451-f42bf02b9440")
   public class Table extends AbstractTable {
+
+    @Override
+    protected Class<? extends IMenu> getConfiguredDefaultMenu() {
+      return EditMenu.class;
+    }
+
+    public PersonIdColumn getPersonIdColumn() {
+      return getColumnSet().getColumnByClass(PersonIdColumn.class);
+    }
+
+    @Order(10)
+    @ClassId("9d1422d2-b868-47d6-8c3a-46d9ed078d21")
+    public class EditMenu extends AbstractMenu {
+      @Override
+      protected String getConfiguredText() {
+        return TEXTS.get("Edit");
+      }
+
+      @Override
+      protected void execAction() {
+        PersonForm form = new PersonForm();
+        form.setPersonId(getPersonIdColumn().getSelectedValue());
+        form.addFormListener(new PersonFormListener());
+        // start the form using its modify handler
+        form.startModify();
+      }
+    }
+
+    @Order(2000)
+    @ClassId("42c4d237-0fba-46c2-b62e-3ff531eeac32")
+    public class NewMenu extends AbstractMenu {
+      @Override
+      protected String getConfiguredText() {
+        return TEXTS.get("New");
+      }
+
+      @Override
+      protected Set<? extends IMenuType> getConfiguredMenuTypes() {
+        return CollectionUtility.<IMenuType>hashSet(
+          TableMenuType.EmptySpace, TableMenuType.SingleSelection);
+      }
+
+      @Override
+      protected void execAction() {
+        PersonForm form = new PersonForm();
+        form.addFormListener(new PersonFormListener());
+        // start the form using its new handler
+        form.startNew();
+      }
+    }
+
+    private class PersonFormListener implements FormListener {
+
+      @Override
+      public void formChanged(FormEvent e) {
+        // reload page to reflect new/changed data after saving any changes
+        if (FormEvent.TYPE_CLOSED == e.getType() && e.getForm().isFormStored()) {
+          reloadPage();
+        }
+      }
+    }
 
     @Order(1)
     @ClassId("34a96171-4a87-487d-928e-033a69246033")

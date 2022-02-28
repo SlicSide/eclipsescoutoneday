@@ -1,6 +1,7 @@
 package org.eclipse.scout.apps.contacts.client;
 
 import org.eclipse.scout.apps.contacts.client.contact.ContactOutline;
+import org.eclipse.scout.apps.contacts.client.person.PersonForm;
 import org.eclipse.scout.apps.contacts.client.search.SearchOutline;
 import org.eclipse.scout.apps.contacts.shared.Icons;
 import org.eclipse.scout.rt.client.ui.action.keystroke.IKeyStroke;
@@ -10,6 +11,7 @@ import org.eclipse.scout.rt.client.ui.desktop.notification.NativeNotificationDef
 import org.eclipse.scout.rt.client.ui.desktop.outline.AbstractOutlineViewButton;
 import org.eclipse.scout.rt.client.ui.desktop.outline.IOutline;
 import org.eclipse.scout.rt.platform.Order;
+import org.eclipse.scout.rt.platform.classid.ClassId;
 import org.eclipse.scout.rt.platform.text.TEXTS;
 import org.eclipse.scout.rt.platform.util.CollectionUtility;
 
@@ -101,6 +103,20 @@ public class Desktop extends AbstractDesktop {
     @Override
     protected String getConfiguredText() {
       return TEXTS.get("QuickAccess");
+    }
+
+    @Order(10)
+    @ClassId("2d8c5ab8-b100-4075-bdd1-7f21ed1dcd7d")
+    public class NewPersonMenu extends AbstractMenu {
+      @Override
+      protected String getConfiguredText() {
+        return TEXTS.get("NewPersonMenu");
+      }
+
+      @Override
+      protected void execAction() {
+        new PersonForm().startNew();
+      }
     }
 
     @Override
