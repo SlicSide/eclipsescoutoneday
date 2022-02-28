@@ -1,7 +1,7 @@
-package org.eclipse.scout.apps.contacts.client.person;
+package org.eclipse.scout.apps.contacts.client.common;
 
-import org.eclipse.scout.apps.contacts.shared.person.IPersonService;
-import org.eclipse.scout.apps.contacts.shared.person.PersonFormData;
+import org.eclipse.scout.apps.contacts.shared.common.IPictureUrlService;
+import org.eclipse.scout.apps.contacts.shared.common.PictureUrlFormData;
 import org.eclipse.scout.rt.client.testenvironment.TestEnvironmentClientSession;
 import org.eclipse.scout.rt.testing.client.runner.ClientTestRunner;
 import org.eclipse.scout.rt.testing.client.runner.RunWithClientSession;
@@ -15,14 +15,15 @@ import org.mockito.Mockito;
 @RunWithSubject("anonymous")
 @RunWith(ClientTestRunner.class)
 @RunWithClientSession(TestEnvironmentClientSession.class)
-public class PersonFormTest {
+public class PictureUrlFormTest {
   @BeanMock
-  private IPersonService m_mockSvc;
+  private IPictureUrlService m_mockSvc;
 // TODO [RicoHahn] add test cases
 
   @Before
   public void setup() {
-    PersonFormData answer = new PersonFormData();
+    PictureUrlFormData answer = new PictureUrlFormData();
+    Mockito.when(m_mockSvc.prepareCreate(ArgumentMatchers.any())).thenReturn(answer);
     Mockito.when(m_mockSvc.create(ArgumentMatchers.any())).thenReturn(answer);
     Mockito.when(m_mockSvc.load(ArgumentMatchers.any())).thenReturn(answer);
     Mockito.when(m_mockSvc.store(ArgumentMatchers.any())).thenReturn(answer);

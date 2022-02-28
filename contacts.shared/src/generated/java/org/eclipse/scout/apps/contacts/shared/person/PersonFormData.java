@@ -1,5 +1,7 @@
 package org.eclipse.scout.apps.contacts.shared.person;
 
+import org.eclipse.scout.apps.contacts.shared.common.AbstractAddressBoxData;
+import org.eclipse.scout.apps.contacts.shared.common.AbstractUrlImageFieldData;
 import org.eclipse.scout.rt.platform.classid.ClassId;
 import org.eclipse.scout.rt.shared.data.form.AbstractFormData;
 import org.eclipse.scout.rt.shared.data.form.fields.AbstractValueFieldData;
@@ -17,12 +19,8 @@ import java.util.Date;
 public class PersonFormData extends AbstractFormData {
   private static final long serialVersionUID = 1L;
 
-  public City getCity() {
-    return getFieldByClass(City.class);
-  }
-
-  public Country getCountry() {
-    return getFieldByClass(Country.class);
+  public AddressBox getAddressBox() {
+    return getFieldByClass(AddressBox.class);
   }
 
   public DateOfBirth getDateOfBirth() {
@@ -87,6 +85,10 @@ public class PersonFormData extends AbstractFormData {
     return getFieldByClass(PhoneWork.class);
   }
 
+  public Picture getPicture() {
+    return getFieldByClass(Picture.class);
+  }
+
   public PictureUrl getPictureUrl() {
     return getFieldByClass(PictureUrl.class);
   }
@@ -95,17 +97,8 @@ public class PersonFormData extends AbstractFormData {
     return getFieldByClass(Position.class);
   }
 
-  public Street getStreet() {
-    return getFieldByClass(Street.class);
-  }
-
-  @ClassId("9df5daba-9b77-442d-aadd-18d5d1bd59e2-formdata")
-  public static class City extends AbstractValueFieldData<String> {
-    private static final long serialVersionUID = 1L;
-  }
-
-  @ClassId("ed60b3a6-c3aa-4cd3-b82e-341427f744a3-formdata")
-  public static class Country extends AbstractValueFieldData<String> {
+  @ClassId("0f6ec4b3-0dec-40db-a9b1-b5dd2f84db59-formdata")
+  public static class AddressBox extends AbstractAddressBoxData {
     private static final long serialVersionUID = 1L;
   }
 
@@ -168,6 +161,11 @@ public class PersonFormData extends AbstractFormData {
     private static final long serialVersionUID = 1L;
   }
 
+  @ClassId("6366a23e-f8ba-4b50-b814-202e63daffc8-formdata")
+  public static class Picture extends AbstractUrlImageFieldData {
+    private static final long serialVersionUID = 1L;
+  }
+
   @ClassId("617ffd40-0d69-4d02-b4f8-90c28c68c6ce-formdata")
   public static class PictureUrl extends AbstractValueFieldData<String> {
     private static final long serialVersionUID = 1L;
@@ -175,11 +173,6 @@ public class PersonFormData extends AbstractFormData {
 
   @ClassId("156f883a-f7ae-443b-be6e-26dcd58b7351-formdata")
   public static class Position extends AbstractValueFieldData<String> {
-    private static final long serialVersionUID = 1L;
-  }
-
-  @ClassId("8bc1b9dd-6adf-4a48-8ed7-a7c0f0367987-formdata")
-  public static class Street extends AbstractValueFieldData<String> {
     private static final long serialVersionUID = 1L;
   }
 }

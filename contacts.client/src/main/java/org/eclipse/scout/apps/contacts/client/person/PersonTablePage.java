@@ -29,6 +29,16 @@ import java.util.Set;
 @Data(PersonTablePageData.class)
 @ClassId("8f3f678a-c455-4621-b97b-bec45abf81c1")
 public class PersonTablePage extends AbstractPageWithTable<Table> {
+  private String organizationId;
+
+  public String getOrganizationId() {
+    return organizationId;
+  }
+
+  public void setOrganizationId(String organizationId) {
+    this.organizationId = organizationId;
+  }
+
   @Override
   protected boolean getConfiguredLeaf() {
     return true;
@@ -36,7 +46,8 @@ public class PersonTablePage extends AbstractPageWithTable<Table> {
 
   @Override
   protected void execLoadData(SearchFilter filter) {
-    importPageData(BEANS.get(IPersonService.class).getPersonTableData(filter));
+    importPageData(BEANS.get(IPersonService.class)
+      .getPersonTableData(filter, getOrganizationId()));
   }
 
   @Override
@@ -91,6 +102,7 @@ public class PersonTablePage extends AbstractPageWithTable<Table> {
       @Override
       protected void execAction() {
         PersonForm form = new PersonForm();
+        form.getOrganizationField().setValue(getOrganizationId());
         form.addFormListener(new PersonFormListener());
         // start the form using its new handler
         form.startNew();

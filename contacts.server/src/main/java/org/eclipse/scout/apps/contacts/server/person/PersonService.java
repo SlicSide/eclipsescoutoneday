@@ -15,23 +15,21 @@ import java.util.UUID;
 
 public class PersonService implements IPersonService {
   @Override
-  public PersonTablePageData getPersonTableData(SearchFilter filter) {
+  public PersonTablePageData getPersonTableData(SearchFilter filter, String organizationId) {
 
     PersonTablePageData pageData = new PersonTablePageData();
 
-    String sql = SQLs.PERSON_PAGE_SELECT + SQLs.PERSON_PAGE_DATA_SELECT_INTO;
-    SQL.selectInto(sql, new NVPair("page", pageData));
+    StringBuilder sql = new StringBuilder(SQLs.PERSON_PAGE_SELECT);
+
+    if (StringUtility.hasText(organizationId)) {
+      sql.append(String.format("WHERE LOWER(organization_id) LIKE LOWER('%s') ",
+        organizationId));
+    }
+
+    sql.append(SQLs.PERSON_PAGE_DATA_SELECT_INTO);
+    SQL.selectInto(sql.toString(), new NVPair("page", pageData));
 
     return pageData;
-  }
-
-  @Override
-  public PersonFormData prepareCreate(PersonFormData formData) {
-    if (!ACCESS.check(new CreatePersonPermission())) {
-      throw new VetoException(TEXTS.get("AuthorizationFailed"));
-    }
-// TODO [RicoHahn] add business logic here.
-    return formData;
   }
 
   @Override
